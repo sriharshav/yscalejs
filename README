@@ -1,0 +1,35 @@
+yScaleJs
+
+This is a simple function to return y-scale of graphs given max value (non-negative).
+It returns logical intervals and units and new max value.
+
+It tries to fit y-Scale from 6 to 10 units and starts with 0.
+
+Examples:
+> js.yScale(17452);
+[ 2000, 9, '18000.000' ]
+
+> js.yScale(57452);
+[ 10000, 6, '60000.000' ]
+
+> js.yScale(5000);
+[ 500, 10, '5000.000' ]
+
+> js.yScale(1000);
+[ 100, 10, '1000.000' ]
+
+> js.yScale(23.23);
+[ 2.5, 10, '25.000' ]
+
+> js.yScale(999999);
+[ 100000, 10, '1000000.000' ]
+
+It tries to make a best fit for possible ranges.
+Give 329 instead of choosing 100 * 3 or 40 * 9, it fits to 50 * 7.
+
+> js.yScale(329);
+[ 50, 7, '350.000' ]
+
+Similarly when given values is 5000 instead of choosing 1000 * 5 it tries to make up 500 * 10.
+
+Function adjusts scales to make analysis easy.
