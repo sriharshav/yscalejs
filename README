@@ -30,6 +30,6 @@ Give 329 instead of choosing 100 * 3 or 40 * 9, it fits to 50 * 7.
 > js.yScale(329);
 [ 50, 7, '350.000' ]
 
-Similarly when given values is 5000 instead of choosing 1000 * 5 it tries to make up 500 * 10.
+Similarly given value 5000 instead of choosing 1000 * 5 it tries to make up 500 * 10.
 
 Function adjusts scales to make analysis easy.
