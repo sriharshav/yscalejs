@@ -1,0 +1,1 @@
+exports.yScale=function(d){var c,a;a=Math;var b=a.floor(a.LOG10E*a.log(d));c=a.pow(10,b);var b=a.pow(10,b-1),e=a.floor(d/b),f=a.floor(e%10);c=20>e?d==c?b:2*b:30>e?5>f?2.5*b:5*b:50>e?5*b:d==5*c?5*b:c;a=a.ceil((d>e*b?e+1:e)*b/c);d=(c*a).toFixed(3);if(c*a!=d)throw Error("Unknown error");return[c,a,d]};

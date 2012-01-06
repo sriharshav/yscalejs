@@ -1,8 +1,11 @@
-/*
- *  
- * /
+/**
+ * This is a simple function to return y-scale of graphs given max value (non-negative).
+ * It returns logical intervals and units and new max value.
+ * It tries to fit y-Scale from 6 to 10 units and starts with 0.
+ * © Copyright 2012 sriharsha vardhan
+ */
 
-/*
+/**
  * Given max value of y scale
  * @returns an array [interval, noOfUnits, scaleMax]
  * interval * noOfUnits = scaleMax
