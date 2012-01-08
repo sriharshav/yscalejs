@@ -1,16 +1,14 @@
 /**
- * This is a simple function to return y-scale of graphs given max value (non-negative).
- * It returns logical intervals and units and new max value.
- * It tries to fit y-Scale from 6 to 10 units and starts with 0.
- * © Copyright 2012 sriharsha vardhan
- */
+ * @preserve Copyright 2012 sriharsha vardhan (sriharsha.net)
+ */ 
 
 /**
  * Given max value of y scale
- * @returns an array [interval, noOfUnits, scaleMax]
+ * @param {number} max value
+ * @return {array} an array [interval, noOfUnits]
  * interval * noOfUnits = scaleMax
  */
-exports.yScale =  function(max) {
+exports.yScaleMax =  function(max) {
   var scalemax, interval, units;
   var M = Math; //Minimize
 
@@ -55,14 +53,53 @@ exports.yScale =  function(max) {
       interval = unit;
     }
   }
- 
+
   scalemax = ((max > (weight * subunit)) ? (weight + 1) : weight) * subunit;
   units = M.ceil(scalemax/interval);
-  scalemax = (interval * units).toFixed(3);
+  scalemax = interval * units;
 
   if ((interval * units) != scalemax) {
     throw new Error("Unknown error");
   }
 
-  return [interval,units,scalemax];
+  return [interval,units];
 }
+
+/**
+ * Given min and range(max-min) this function gives new min
+ * @param {number} min value
+ * @param {number} range (max-min) value
+ * @return {array} an array [interval, noOfUnits, scaleMax]
+ */
+exports.yScale =  function(min, max) {
+
+  var range, interval, scaleMax, scaleMin,  scale, scales = [];
+
+  range = max - min;
+
+  //Get raw max
+  interval = this.yScaleMax(max);
+
+  //Get max scaled differential
+  interval = this.yScaleMax((interval[0] * interval[1]) - min);
+  scaleMin = (Math.floor(min/interval[0]) * interval[0]);
+  scaleMax = (Math.ceil(max/interval[0]) * interval[0]);
+
+  //Get scaled differential
+  interval = this.yScaleMax(scaleMax-scaleMin);
+  scaleMin = (Math.floor(min/interval[0]) * interval[0]);
+  scaleMax = (Math.ceil(max/interval[0]) * interval[0]);
+
+  scale = scaleMin;
+  do {
+    scales.push(scale);
+    scale = Math.round((scale + interval[0]) * 1000)/1000;
+  } while(scale <= scaleMax);
+
+  if (scales.length > 11) {
+    throw new Error("Unknown error");
+  }
+
+  return scales;
+}
+
