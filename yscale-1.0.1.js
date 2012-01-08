@@ -68,8 +68,8 @@ exports.yScaleMax =  function(max) {
 /**
  * Given min and range(max-min) this function gives new min
  * @param {number} min value
- * @param {number} range (max-min) value
- * @return {array} an array [interval, noOfUnits, scaleMax]
+ * @param {number} max value
+ * @return {array} an array of scales
  */
 exports.yScale =  function(min, max) {
 
