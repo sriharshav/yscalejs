@@ -7,8 +7,8 @@ yScale : Given min and max this function returns all scales
 Routines would fit y-Scale from 6 to 10 units and starts with 0 or specified min value.
 
 Quick check with node :
-node -e "var ys = require('./yscale'); console.log(ys.yScaleMax(237));"
-node -e "var ys = require('./yscale'); console.log(ys.yScale(0.2, 1.94));"
+node -e "var ys = require('./yscale-1.0.1'); console.log(ys.yScaleMax(237));"
+node -e "var ys = require('./yscale-1.0.1'); console.log(ys.yScale(0.2, 1.94));"
 
 Windows users may run quickrun.bat
 
