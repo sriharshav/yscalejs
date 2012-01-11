@@ -1,4 +1,4 @@
-var ys = require('../yscale-min-1.0.1');
+var ys = require('../yscale-min-1.0.2');
 
 describe("yScale", function() {
   it("should scale for min value of 0", function() {
@@ -11,7 +11,10 @@ describe("yScale", function() {
     expect(ys.yScale(0.2, 2.77)).toEqual([ 0, 0.5, 1, 1.5, 2, 2.5, 3 ]);
   });
   it("should scale for small range of bigger values", function() {
-    expect(ys.yScale(19284, 19359)).toEqual([ 19275, 19300, 19325, 19350, 19375 ]);
+    expect(ys.yScale(19284, 19359)).toEqual([ 19280, 19290, 19300, 19310, 19320, 19330, 19340, 19350, 19360 ]);
+  });
+  it("should scale for small range of bigger values", function() {
+    expect(ys.yScale(52479, 52635)).toEqual([ 52460, 52480, 52500, 52520, 52540, 52560, 52580, 52600, 52620, 52640 ]);
   });
   it("should not return more than 11 values", function() {
     var result = ys.yScale(7.8,500);

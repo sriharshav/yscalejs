@@ -8,23 +8,27 @@
  * @return {array} an array [interval, noOfUnits]
  * interval * noOfUnits = scaleMax
  */
-exports.yScaleMax =  function(max) {
-  var scalemax, interval, units;
-  var M = Math; //Minimize
+exports.yScaleMax = function(max) {
+  var M, interval, order, rider, scalemax, subunit, unit, units, weight;
+  scalemax = 0;
+  interval = 0;
+  units = 0;
+  M = Math;
 
   //Get order of log10
-  var order = M.floor(M.LOG10E * M.log(max));
+  order = M.floor(M.LOG10E * M.log(max));
 
   //Get units and sub-units
   //For 12745 unit would be 10000 and sub-unit would be 1000
-  var unit = M.pow(10,order);
-  var subunit = M.pow(10,order-1);
+  unit = M.pow(10, order);
+  subunit = M.pow(10, order - 1);
 
   //Get weight and rider
   //For 12745 weight would be 12 and rider would be 2
-  var weight = M.floor(max / subunit);
-  var rider = M.floor(weight % 10);
+  weight = M.floor(max / subunit);
+  rider = M.floor(weight % 10);
 
+  
   //Get interval
   if (weight < 20) {
     //In case of 100, 1000 ...
@@ -54,16 +58,14 @@ exports.yScaleMax =  function(max) {
     }
   }
 
-  scalemax = ((max > (weight * subunit)) ? (weight + 1) : weight) * subunit;
-  units = M.ceil(scalemax/interval);
+  scalemax = (max > (weight * subunit) ? weight + 1 : weight) * subunit;
+  units = M.ceil(scalemax / interval);
   scalemax = interval * units;
-
-  if ((interval * units) != scalemax) {
+  if ((interval * units) !== scalemax) {
     throw new Error("Unknown error");
   }
-
-  return [interval,units];
-}
+  return [interval, units];
+};
 
 /**
  * Given min and range(max-min) this function gives new min
@@ -78,28 +80,41 @@ exports.yScale =  function(min, max) {
   range = max - min;
 
   //Get raw max
-  interval = this.yScaleMax(max);
+  interval = this.yScaleMax(range);
 
-  //Get max scaled differential
-  interval = this.yScaleMax((interval[0] * interval[1]) - min);
-  scaleMin = (Math.floor(min/interval[0]) * interval[0]);
-  scaleMax = (Math.ceil(max/interval[0]) * interval[0]);
+  //Get adjusted interval and units
+  if (((interval[0] * interval[1]) - range) <= interval[0]) {
+    interval = this.yScaleMax(range + interval[0]);
+  }
+  if (min <= interval[0]) {
+      interval = this.yScaleMax(max);
+  }
 
-  //Get scaled differential
-  interval = this.yScaleMax(scaleMax-scaleMin);
-  scaleMin = (Math.floor(min/interval[0]) * interval[0]);
-  scaleMax = (Math.ceil(max/interval[0]) * interval[0]);
+  //Calculate Scale Minimum
+  scaleMin = min - interval[0];
+  if (scaleMin <= 0) {
+    scaleMin = 0;
+  } else {
+    scaleMin = scaleMin + (10 - (scaleMin % 10));
+  }
 
+  //Calculate Scale Maximum
+  scaleMax = scaleMin + (interval[0] * interval[1]);
+  if ((scaleMax - interval[0]) > max) {
+    scaleMax = scaleMax - interval[0];
+  }
+
+  //Now fill scales
   scale = scaleMin;
   do {
     scales.push(scale);
     scale = Math.round((scale + interval[0]) * 1000)/1000;
   } while(scale <= scaleMax);
 
+  //Assert
   if (scales.length > 11) {
-    throw new Error("Unknown error");
+    throw Error("Unknown error");
   }
 
   return scales;
 }
-
