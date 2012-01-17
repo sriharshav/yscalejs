@@ -95,7 +95,7 @@ exports.yScale =  function(min, max) {
   if (scaleMin <= 0) {
     scaleMin = 0;
   } else {
-    scaleMin = scaleMin + (10 - (scaleMin % 10));
+    scaleMin = scaleMin + (interval[0] - (scaleMin % interval[0]));
   }
 
   //Calculate Scale Maximum
