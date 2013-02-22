@@ -1,4 +1,4 @@
-var ys = require('../yscale-min-1.0.3');
+var ys = require('../yscale-min-1.0.4');
 
 describe("yScaleMax", function() {
   it("should scale with 10 units for values like 10 and 100 .. ", function() {

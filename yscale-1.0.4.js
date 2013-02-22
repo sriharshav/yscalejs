@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright 2012 sriharsha vardhan (sriharsha.net)
+ * @preserve Copyright 2012-2013 sriharsha vardhan (sriharsha.net)
  */ 
 
 /**
@@ -25,7 +25,7 @@ exports.yScaleMax = function(max) {
 
   //Get weight and rider
   //For 12745 weight would be 12 and rider would be 2
-  weight = M.floor(max / subunit);
+  weight = subunit ? M.floor(max / subunit) : 0;
   rider = M.floor(weight % 10);
 
   
@@ -59,7 +59,7 @@ exports.yScaleMax = function(max) {
   }
 
   scalemax = (max > (weight * subunit) ? weight + 1 : weight) * subunit;
-  units = M.ceil(scalemax / interval);
+  units = interval ? M.ceil(scalemax / interval) : 0;
   scalemax = interval * units;
   if ((interval * units) !== scalemax) {
     throw new Error("Unknown error");

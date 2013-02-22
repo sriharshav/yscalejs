@@ -1,4 +1,4 @@
-var ys = require('../yscale-min-1.0.3');
+var ys = require('../yscale-min-1.0.4');
 
 describe("yScale", function() {
   it("should scale for min value of 0", function() {
